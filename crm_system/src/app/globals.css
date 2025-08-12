@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* 性能优化 - 启用硬件加速和滚动优化 */
+* {
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* 启用平滑滚动 */
+  scroll-behavior: smooth;
+  /* 优化滚动性能 */
+  -webkit-overflow-scrolling: touch;
+  /* 减少滚动卡顿 */
+  scroll-padding-top: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  /* 启用硬件加速 */
+  transform: translateZ(0);
+  /* 优化字体渲染 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* 优化文本渲染 */
+  text-rendering: optimizeSpeed;
+  /* 减少重绘 */
+  backface-visibility: hidden;
+  /* 优化滚动 */
+  overflow-x: hidden;
+  /* 移除默认边距 */
+  margin: 0;
+  padding: 0;
+  /* 防止滚动条导致的布局偏移 */
+  scrollbar-gutter: stable;
+}
+
+/* 优化滚动条样式和性能 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 优化所有可滚动元素 */
+.scrollable,
+[data-scrollable],
+.overflow-auto,
+.overflow-y-auto,
+.overflow-x-auto {
+  /* 启用GPU加速 */
+  will-change: scroll-position;
+  /* 优化滚动性能 */
+  -webkit-overflow-scrolling: touch;
+  /* 减少滚动反弹 */
+  overscroll-behavior: contain;
+}
+
+/* 优化导航栏固定位置性能 */
+.sticky,
+.fixed {
+  /* 启用GPU加速 */
+  will-change: transform;
+  /* 创建新的层叠上下文 */
+  transform: translateZ(0);
+}
+
+/* 优化动画和过渡 */
+.transition-all,
+.transition-colors,
+.transition-opacity,
+.transition-transform,
+[class*="transition-"] {
+  /* 启用硬件加速 */
+  will-change: auto;
+  /* 优化动画性能 */
+  backface-visibility: hidden;
+  /* 减少重绘 */
+  transform: translateZ(0);
+}
+
+/* 优化悬停效果 */
+.nav-link:hover,
+.shadow-lg:hover,
+button:hover,
+a:hover {
+  /* 减少重绘 */
+  will-change: box-shadow, background-color, transform;
+}
+
+/* 移动设备优化 */
+@media (max-width: 768px) {
+  html {
+    /* 移动设备滚动优化 */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    /* 移动设备性能优化 */
+    -webkit-transform: translateZ(0);
+    /* 禁用选择以提升性能 */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* 允许文本选择的元素 */
+  p, span, div[contenteditable], input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
